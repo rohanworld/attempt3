@@ -1,0 +1,761 @@
+<!-- Pending:
+figure out navbar design-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Anonymous Confession Hub or Website for Presidency University Students. Share your thoughts, secrets, and confessions with Presidency. ">
+    <link rel="shortcut icon" href="bgicoig.png" type="image/x-icon">
+    <meta name="keywords" content="Confession, Anonymous, Presidency University, ConfessU, , Diaries, Secret, Campus, University Life, College Life, Confession Hub, Thoughts">
+    <meta name="robots" content="index, follow" >
+    <meta name="author" content="Presidencian">
+    <title>Swipe - It | Discover Secret Confessions of Presidency and Share Your Own </title>
+    <link rel="stylesheet" href="https://unpkg.com/driver.js/dist/driver.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <!-- icon from google fonts -->
+    <!-- close btn -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,0" />
+    <style>
+      .navbar {
+        display: flex;
+        justify-content: center;
+        align-items: center;  
+        height: 60px;
+        background-color: transparent;
+        /* color: #B3D6DB; */
+        color: #EF3D4D;
+        padding: 0 20px;
+        font-weight: bolder;
+        text-align: center;
+        font-size: 28px;
+        flex-wrap: wrap;
+      }
+
+      .navbar h1 {
+        padding-top: 10px;
+        color: #EF3D4D;
+        font-family: 'Comfortaa', cursive;
+        margin: 0;
+        font-weight: bolder;
+        width: 100%;
+        text-align: center;
+      }
+      @media screen and (max-width: 768px) {
+        .navbar {
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          height: auto;
+          padding: 20px;
+          font-size: 30px;
+          text-align: left;
+        }
+      }
+
+      html,
+      body {
+        /* add background-color and background-image */
+        background: rgba(47,84,132,.9);
+        background-image: url(addbg.png);
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+      #board {
+        width: 100%;
+        height: 88%;
+        position: relative;
+        overflow: hidden;
+        /* background-color: rgb(245, 247, 250); */
+        max-width: 720px;
+        margin: 0 auto;
+      }
+      @media only screen and (max-width: 720px) {
+        #board {
+          width: 100%;
+          height: 85%;
+        }
+        body {
+          /* position: fixed; */
+          width: 100%;
+          height: 90%;
+          margin: 0;
+          padding: 0;
+        }
+      }
+
+      .card {
+        width: 80%;
+        height: auto;
+        max-width: 456px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 12px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.6);
+        background-color: #FEDF4A;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        padding: 20px;
+        margin: auto;
+      }
+
+      .card p {
+        font-family: 'Itim', cursive;
+        font-weight: 600;
+        color: black;
+        font-size: 26px;
+        line-height: 34px;
+        margin-top: 10px;
+      }
+
+      @media (max-width: 456px) {
+        .card {
+          width: 90%;
+          height: auto;
+        }
+      }
+
+      .new-post-button {
+        position: absolute;
+        bottom: 10px;
+        font-size: 32px;
+        left: 50%;
+        font-family: 'Itim', cursive;
+        transform: translateX(-50%);
+        padding: 15px 123px;
+        background-color: #4681f4;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      @media screen and (max-width: 767px) {
+        .new-post-button {
+          position: relative;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          transform: none;
+          padding: 10px 20px;
+          margin-top: 20px;
+          text-align: center;
+        }
+      }
+
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      /* make it responsive using media queries*/
+      
+      .modal-content {
+        width: 80%;
+        height: auto;
+        max-width: 456px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      @media (max-width: 456px) {
+        .modal-content {
+          width: 90%;
+          height: auto;
+        }
+      }
+      .modal-close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+      }
+      @media screen and (max-width: 767px) {
+        .modal-close-btn {
+          top: 10px;
+          right: 10px;
+        }
+      }
+      .modal-content textarea {
+        font-family: 'Itim', cursive;
+        text-align: center;
+        width: 90%;
+        height: 300px;
+        margin-bottom: 20px;
+        resize: none;
+        font-size: 26px;
+        font-weight: 500;
+        padding: 20px;
+        border: 1px solid black;
+        border-radius: 10px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content .submit-btn {
+        width: 40%;
+        padding: 20px 40px;
+        font-size: 18px;
+        margin: 20px auto;
+      }
+
+      .submit-btn {
+        display: block;
+        margin: -10px auto;
+        padding: 10px 20px;
+        background-color: #4681f4;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      @media only screen and (max-width: 767px) {
+        .submit-btn {
+          width: 80%;
+          margin: 10px auto;
+        }
+      }
+
+      @media only screen and (max-width: 480px) {
+        .submit-btn {
+          width: 100%;
+          margin: 20px auto;
+        }
+      }
+      @media only screen and (max-width: 1024px) {
+        .new-post-button {
+          right: 50px;
+          bottom: 10px;
+        }
+        .modal-content {
+          width: 60%;
+          height: 80%;
+        }
+        .modal-content textarea {
+          width: 80%;
+        }
+      }
+
+      @media only screen and (max-width: 768px) {
+        .new-post-button {
+          right: 5px;
+          bottom: 5px;
+        }
+        .modal-content {
+          width: 80%;
+          height: 90%;
+        }
+        .modal-content textarea {
+          width: 70%;
+        }
+      }
+    </style>
+  </head>
+
+  <body oncontextmenu="return false" >
+    <div class="navbar">
+      <!-- <h1 class="titleName">SWIPES</h1> -->
+      <h1 class="titleName" onclick="refreshPage()" style="cursor: pointer;">Swipe-It</h1>
+    </div>
+    <div id="board"></div>
+    <button class="new-post-button ">  New Post</button>
+    <div class="modal">
+      <div class="modal-content">
+        <h2 style="text-align: center; font-family: 'Itim', cursive; margin-bottom: 10px; margin-top: 1px">
+          New Post
+        </h2>
+        <textarea placeholder="What's on your Mind?" maxlength="456" autofocus></textarea>
+        <button
+          class="submit-btn"
+          style="
+            display: block;
+            margin: -10px auto;
+            padding: 10px 1px;
+            background-color: #4681f4;
+            color: white;
+            border-radius: 10px;
+            font-size: 23px;
+            cursor: pointer;
+            font-family: 'Itim', cursive;
+          "
+        >
+          PUBLISH
+        </button>
+        <span
+          class="modal-close-btn material-symbols-outlined"
+          style="position: absolute; top: 20px; right: 20px; cursor: pointer"
+          >X</span
+        >
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-database.js"></script>
+    <script src="https://unpkg.com/driver.js/dist/driver.min.js"></script>
+    <script src="long-press-event.min.js"></script>
+
+    
+
+
+    <script>
+      function refreshPage(){
+        location.reload();
+      }
+      var totalPosts = 0;
+      var posts = [];
+      // posts = posts.reverse();
+      
+      // Get modal, new post button and modal close button elements
+      const modal = document.querySelector(".modal");
+      document.querySelector(".modal-close-btn").addEventListener('long-press', function(e) {
+        alert(totalPosts-1)
+        // The confirm() method returns true if the user clicked "OK", otherwise false.
+      });
+      const newPostButton = document.querySelector(".new-post-button");
+      const modalCloseButton = document.querySelector(".modal-close-btn");
+      document
+        .querySelector(".submit-btn")
+        .addEventListener("click", function () {
+          if (document.querySelector("textarea").value == "") {
+            // alert("Please enter a post!");
+            document.querySelector("textarea").style.border = "1px solid red";
+            document.querySelector("textarea").placeholder =
+              "Confession Cannot be Empty!";
+            // and back to normal for 2 seconds
+            setTimeout(function () {
+              document.querySelector("textarea").style.border =
+                "1px solid black";
+                document.querySelector("textarea").placeholder =
+              "What's on your Mind?";
+            }, 1234);
+          } else {
+            alert("Post Successfully Submitted!");
+            modal.style.display = "none";
+          }
+        });
+
+
+      // Show modal when new post button is clicked
+      newPostButton.addEventListener("click", function () {
+        modal.style.display = "block";
+      });
+
+      // Hide modal when close button is clicked
+      modalCloseButton.addEventListener("click", function () {
+        modal.style.display = "none";
+      });
+      //  or Escape key is pressed
+      document.onkeydown = function (evt) {
+        evt = evt || window.event;
+        if (evt.keyCode == 27) {
+          document.querySelector(".modal").style.display = "none";
+        }
+      };
+      //  or clicking outside of modal
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+
+      class Carousel {
+        constructor(element) {
+          this.board = element;
+
+          // add first two cards programmatically
+          this.push();
+          this.push();
+
+          // handle gestures
+          this.handle();
+        }
+
+        push() {
+          // create new card element
+          let card = document.createElement("div");
+          card.classList.add("card");
+
+          // insert random text in card
+          let randomText = this.getText();
+          // if randowm text is undefeined then make it invisible
+          if (randomText == "undefined") {
+            card.style.visibility = "hidden";
+          }
+          card.innerHTML = `<p>${randomText}</p>`;
+
+          // append card to board
+          this.board.appendChild(card);
+        }
+
+        handle() {
+          // list all cards
+          this.cards = this.board.querySelectorAll(".card");
+
+          // get top card
+          this.topCard = this.cards[this.cards.length - 1];
+
+          // get next card
+          this.nextCard = this.cards[this.cards.length - 2];
+
+          // if at least one card is present
+          if (this.cards.length > 0) {
+            // set default top card position and scale
+            this.topCard.style.transform =
+              "translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(1)";
+              this.topCard.style.background = "#FEDF4A";
+
+            // destroy previous Hammer instance, if present
+            if (this.hammer) this.hammer.destroy();
+
+            // listen for tap and pan gestures on top card
+            this.hammer = new Hammer(this.topCard);
+            this.hammer.add(new Hammer.Tap());
+            this.hammer.add(
+              new Hammer.Pan({
+                position: Hammer.position_ALL,
+                threshold: 0,
+              })
+            );
+
+            // pass events data to custom callbacks
+            this.hammer.on("tap", (e) => {
+              this.onTap(e);
+            });
+            this.hammer.on("pan", (e) => {
+              this.onPan(e);
+            });
+          }
+        }
+        onTap(e) {
+          // get finger position on top card
+          let propX =
+            (e.center.x - e.target.getBoundingClientRect().left) /
+            e.target.clientWidth;
+
+          // get rotation degrees around Y axis (+/- 15) based on finger position
+          let rotateY = 15 * (propX < 0.05 ? -1 : 1);
+
+          // enable transform transition
+          this.topCard.style.transition = "transform 100ms ease-out";
+
+          // apply rotation around Y axis
+          this.topCard.style.transform =
+            "translateX(-50%) translateY(-50%) rotate(0deg) rotateY(" +
+            rotateY +
+            "deg) scale(1)";
+            this.topCard.style.background = "#FEDF4A";
+
+          // wait for transition end
+          setTimeout(() => {
+            // reset transform properties
+            this.topCard.style.transform =
+              "translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(1)";
+              this.topCard.style.background = "#FEDF4A";
+          }, 100);
+        }
+
+        onPan(e) {
+          if (!this.isPanning) {
+            this.isPanning = true;
+
+            // remove transition properties
+            this.topCard.style.transition = null;
+            if (this.nextCard) this.nextCard.style.transition = null;
+
+            // get top card coordinates in pixels
+            let style = window.getComputedStyle(this.topCard);
+            let mx = style.transform.match(/^matrix\((.+)\)$/);
+            this.startPosX = mx ? parseFloat(mx[1].split(", ")[4]) : 0;
+            this.startPosY = mx ? parseFloat(mx[1].split(", ")[5]) : 0;
+
+            // get top card bounds
+            let bounds = this.topCard.getBoundingClientRect();
+
+            // get finger position on top card, top (1) or bottom (-1)
+            this.isDraggingFrom =
+              e.center.y - bounds.top > this.topCard.clientHeight / 2 ? -1 : 1;
+          }
+
+          // get new coordinates
+          let posX = e.deltaX + this.startPosX;
+          let posY = e.deltaY + this.startPosY;
+
+          // get ratio between swiped pixels and the axes
+          let propX = e.deltaX / this.board.clientWidth;
+          let propY = e.deltaY / this.board.clientHeight;
+
+          // get swipe direction, left (-1) or right (1)
+          let dirX = e.deltaX < 0 ? -1 : 1;
+
+          // get degrees of rotation, between 0 and +/- 45
+          let deg = this.isDraggingFrom * dirX * Math.abs(propX) * 45;
+
+          // get scale ratio, between .95 and 1
+          let scale = (95 + 5 * Math.abs(propX)) / 100;
+
+          // move and rotate top card
+          this.topCard.style.transform =
+            "translateX(" +
+            posX +
+            "px) translateY(" +
+            posY +
+            "px) rotate(" +
+            deg +
+            "deg) rotateY(0deg) scale(1)";
+
+          // scale up next card
+          if (this.nextCard)
+            this.nextCard.style.transform =
+              "translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(" +
+              scale +
+              ")";
+
+          if (e.isFinal) {
+            this.isPanning = false;
+
+            let successful = false;
+
+            // set back transition properties
+            this.topCard.style.transition = "transform 200ms ease-out";
+            if (this.nextCard)
+              this.nextCard.style.transition = "transform 100ms linear";
+
+            // check threshold and movement direction
+            if (propX > 0.25 && e.direction == Hammer.DIRECTION_RIGHT) {
+              successful = true;
+              // get right border position
+              posX = this.board.clientWidth;
+            } else if (propX < -0.25 && e.direction == Hammer.DIRECTION_LEFT) {
+              successful = true;
+              // get left border position
+              posX = -(this.board.clientWidth + this.topCard.clientWidth);
+            } else if (propY < -0.25 && e.direction == Hammer.DIRECTION_UP) {
+              successful = true;
+              // get top border position
+              posY = -(this.board.clientHeight + this.topCard.clientHeight);
+            }
+
+            if (successful) {
+              // throw card in the chosen direction
+              this.topCard.style.transform =
+                "translateX(" +
+                posX +
+                "px) translateY(" +
+                posY +
+                "px) rotate(" +
+                deg +
+                "deg)";
+
+              // wait transition end
+              setTimeout(() => {
+                // remove swiped card
+                this.board.removeChild(this.topCard);
+                // add new card
+                this.push();
+                // handle gestures on new top card
+                this.handle();
+              }, 200);
+            } else {
+              // reset cards position and size
+              this.topCard.style.transform =
+                "translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(1)";
+                this.topCard.style.background = "#FEDF4A";
+              if (this.nextCard)
+                this.nextCard.style.transform =
+                  "translateX(-50%) translateY(-50%) rotate(0deg) rotateY(0deg) scale(0.95)";
+                  this.topCard.style.background = "#FEDF4A";
+            }
+          }
+        }
+
+        getText() {
+          this.currentIndex = this.currentIndex || 0;
+          // Show "Welcome to my website" as very first card
+          if (this.currentIndex === 0) {
+            this.currentIndex = posts.length - 1;
+            return "Loading...";
+          }
+          if (this.currentIndex < 0) {
+            this.currentIndex = posts.length - 1;
+          }
+          
+          return posts[this.currentIndex--];
+        }
+
+
+        getRotationAngle(x, y) {
+          return x / 10;
+        }
+
+        getYDegree(x, y, angle) {
+          return (x / 10) * Math.abs(Math.sin(angle));
+        }
+
+        getScale(x) {
+          return 1 + (x / this.board.offsetWidth) * 0.05;
+        }
+      }
+
+      // initialize carousel
+      let carousel = new Carousel(document.querySelector("#board"));
+
+
+      // FIREBASE CODE
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyB8j4CFEIVcUWsR-pm8bIPH-6-_Gq20OoI",
+        authDomain: "websitehostingdemo-firsttry.firebaseapp.com",
+        databaseURL: "https://websitehostingdemo-firsttry-default-rtdb.firebaseio.com",
+        projectId: "websitehostingdemo-firsttry",
+        storageBucket: "websitehostingdemo-firsttry.appspot.com",
+        messagingSenderId: "305342655089",
+        appId: "1:305342655089:web:901290182f09aed92089d0",
+        measurementId: "G-VD02460NCT"
+      };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Get a reference to the database service
+  var database = firebase.database();
+
+// Add a new post to the database
+function addPost(text) {
+  var currentTime = new Date();
+  var postData = {
+    text: text,
+    time: currentTime.toLocaleString()
+  };
+
+  var newPostKey = database.ref().child('posts').push().key;
+
+  var updates = {};
+  updates['/posts/' + newPostKey] = postData;
+
+  return database.ref().update(updates);
+  // alert('Post added');
+  
+}
+
+// Submit the new post
+document.querySelector('.submit-btn').addEventListener('click', function() {
+  var text = document.querySelector('textarea').value;
+  
+  if (!text) {
+    // alert('Please enter a message'); 
+  } else {
+    addPost(text);
+    location.reload();
+  }
+});
+
+
+
+
+// RETREIVE POST NEWEST
+
+
+// Reference to the database
+var database = firebase.database();
+
+// Reference to the posts node in the database
+var postsRef = database.ref('posts');
+
+// Function to retrieve posts from the database
+function getText() {
+  // Array to store the retrieved posts
+  // var posts = [];
+
+  postsRef.orderByChild("time").once('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      var childData = childSnapshot.val();
+      posts.push(childData.text);
+    });
+  
+
+
+    this.currentIndex = this.currentIndex || 0;
+    if (this.currentIndex >= posts.length) {
+      this.currentIndex = 0;
+    }
+    
+  });
+}
+getText();
+
+
+
+// Reference to the database
+var database = firebase.database();
+
+// Reference to the posts node in the database
+var postsRef = database.ref('posts');
+
+// Function to count the number of posts in the database
+postsRef.once('value', function(snapshot) {
+console.log('Number of posts:', snapshot.numChildren());
+totalPosts = snapshot.numChildren();
+});
+
+
+// QUICK TOUR
+const driver = new Driver();
+driver.defineSteps([{
+  element: '.card',
+  popover: {
+    title: 'Discover ',
+    description: 'Swipe the Card left or right to see the Confessions',
+    position: 'bottom-center',
+    offset: 20,
+  }
+},
+{
+  element: '.new-post-button',
+  popover: {
+    title: 'Confess',
+    description: 'Click here to add a new Confession',
+    position: 'top-center',
+    offset: 20,
+  }
+},{
+  element: '.navbar',
+  popover: {
+    title: 'Refresh It',
+    description: 'Refresh the page to see the newest Confessions',
+    position: 'bottom-center',
+    offset: 20,
+  }
+}
+// ,{
+//   element: '.titleName',
+//   popover: {
+//     title: 'Queries or Help',
+//     description: 'Long Press to submit query or feedback and To Know More about this Website',
+//     position: 'bottom-center',
+//     offset: 20,
+//   }
+// },
+]);
+driver.start();
+
+    </script>
+  </body>
+</html>
